@@ -1,10 +1,6 @@
-# bienvenue dans la rumeur security
-- gossip security :
-
-- choisis 1 lieu 
-- 1 autre lieu 
-- choisis des personnes
-- et lanc des rumeur de gens qui ont été hackés
+# bienvenue dans moussaillon pedia
+- choisis 3 moussailon au hasard 
+- chercher des moussaillons
 - lancer:
 ```
 $ sh mysite.sh
@@ -12,4 +8,3 @@ $ sh mysite.sh
 - visit http://localhost:3000
 
 
-# un-interpreter
