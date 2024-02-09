@@ -94,7 +94,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		  <a class="navbar-brand" href="/">Olympedia</a>
-		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			        <span class="navbar-toggler-icon"></span>
 				  </button>
 
@@ -107,10 +107,11 @@
 												          <a class="nav-link" href="#">Link</a>
 													        </li>
 														      <li class="nav-item dropdown">
-															              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 																	                Moussaillons
 																			        </a>
 																				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+																						          <a class="dropdown-item" href="/nouvellepersonne">ajouter un moussaillon</a>
 																						          <a class="dropdown-item" href="/recherche avancée">recherche avancée</a>
 																						          <a class="dropdown-item" href="/recherche avancée">related moussaillon (cherchr des moussaillons qui sont la tante d'1 autre olympien et qui a participe à n'importe quel jeu)</a>
 																							            <a class="dropdown-item" href="#">double country (chercher moussaillon qui a 2 pays)</a>
@@ -130,11 +131,6 @@
 																																			          </form>
 																																				    </div>
 	</nav>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		  <a class="navbar-brand" href="/">	 &#127760;  UN</a>
-	</nav>
-	<h1 class="recordinguntitle">Digital recordings portal &#127925; 	
-	&#127911; &#128266; &#x23f5; &#x23f8;</h1>
 <main>
 <p id="notice"><%=session["notice"]%></p>
     {plusdemot}
@@ -154,6 +150,7 @@
   <script src="/js/post.js"></script>
   <script src="/js/main.js"></script>
   <script src="/js/un.js"></script>
+  <script src="/js/flag.js"></script>
 
 
 

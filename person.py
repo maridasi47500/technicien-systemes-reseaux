@@ -15,6 +15,11 @@ class Person(Model):
                     );""")
         self.con.commit()
         #self.con.close()
+    def gettrois(self):
+        self.cur.execute("select * from person ORDER BY RANDOM() LIMIT 3")
+
+        row=self.cur.fetchall()
+        return row
     def getall(self):
         self.cur.execute("select * from person")
 

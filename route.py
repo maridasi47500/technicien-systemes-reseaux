@@ -147,8 +147,7 @@ class Route():
         self.render_figure.set_param("enregistrer",True)
         return self.render_figure.render_figure("welcome/radio.html")
     def hello(self,search):
-        self.render_figure.set_param("rumeurs",self.dbRumeur.getall())
-        self.render_figure.set_param("hacks",self.dbHack.getall())
+        self.render_figure.set_param("users",self.dbPersonne.gettrois())
         print("hello action")
         return self.render_figure.render_figure("welcome/index.html")
     def delete_user(self,params={}):
@@ -225,7 +224,7 @@ class Route():
         return self.render_figure.render_json()
     def ajouterpersonne(self,search):
 
-        return self.render_figure.render_only_figure("ajouter/personne.html")
+        return self.render_figure.render_figure("ajouter/personne.html")
     def ajouterlieu(self,search):
         return self.render_figure.render_only_figure("ajouter/lieu.html")
     def ajouterhack(self,search):
@@ -320,13 +319,7 @@ class Route():
             ROUTES={
             "^/personne/([0-9]+)$":self.voirpersonne,
             "^/lieu/([0-9]+)$":self.voirlieu,
-            '^/nouvellerumeur$': self.nouvellerumeur,
-            '^/nouveauhack$': self.nouveauhack,
-            '^/nouveaulieu$': self.nouveaulieu,
             '^/nouvellepersonne$': self.nouvellepersonne,
-            '^/ajouterrumeur$': self.ajouterrumeur,
-            '^/ajouterhack$': self.ajouterhack,
-            '^/ajouterlieu$': self.ajouterlieu,
             '^/ajouterpersonne$': self.ajouterpersonne,
             '^/new$': self.nouveau,
             '^/welcome$': self.welcome,
