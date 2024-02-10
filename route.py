@@ -6,6 +6,8 @@ from myrecording import Myrecording
 from place import Place
 from person import Person
 from country import Country
+from periode import Periode
+from group_stuf import Group_stuff
 from hack import Hack
 from gossip import Gossip
 
@@ -27,6 +29,8 @@ class Route():
         self.dbRecording=Myrecording()
         self.dbRumeur=Gossip()
         self.dbLieu=Place()
+        self.dbGroupStuff=Group_stuff()
+        self.dbPeriode=Periode()
         self.dbPersonne=Person()
         self.dbCountry=Country()
         self.dbHack=Hack()
@@ -129,6 +133,24 @@ class Route():
         else:
           self.set_code422(True)
         return self.render_some_json("welcome/redirect.json")
+    def nouvelleperiode(self,search):
+        myparam=self.get_post_data()(params=("name",))
+        self.render_figure.set_param("redirect","/")
+        x=self.dbPeriode.create(myparam)
+        if x:
+          self.set_notice("votre periode a été ajoutée")
+        else:
+          self.set_code422(True)
+        return self.render_some_json("welcome/redirect.json")
+    def nouveaugroupstuff(self,search):
+        myparam=self.get_post_data()(params=("name",))
+        self.render_figure.set_param("redirect","/")
+        x=self.dbGroupStuff.create(myparam)
+        if x:
+          self.set_notice("votre personne a été ajoutée")
+        else:
+          self.set_code422(True)
+        return self.render_some_json("welcome/redirect.json")
     def nouvellepersonne(self,search):
         myparam=self.get_post_data()(params=("name","pic","country_id"))
         self.render_figure.set_param("redirect","/")
@@ -224,6 +246,12 @@ class Route():
             self.set_json("{\"redirect\":\"/youbank\"}")
             print("session login",self.Program.get_session())
         return self.render_figure.render_json()
+    def ajoutergroupstuff(self,search):
+
+        return self.render_figure.render_figure("ajouter/group_stuff.html")
+    def ajouterperiode(self,search):
+
+        return self.render_figure.render_figure("ajouter/periode.html")
     def ajouterpersonne(self,search):
 
         self.render_figure.set_param("pays",self.dbCountry.getall())
@@ -322,6 +350,10 @@ class Route():
             ROUTES={
             "^/personne/([0-9]+)$":self.voirpersonne,
             "^/lieu/([0-9]+)$":self.voirlieu,
+            '^/nouveaugroupstuff$': self.nouveaugroupstuff,
+            '^/ajoutergroupstuff$': self.ajoutergroupstuff,
+            '^/nouvelleperiode$': self.nouvelleperiode,
+            '^/ajouterperiode$': self.ajouterperiode,
             '^/nouvellepersonne$': self.nouvellepersonne,
             '^/ajouterpersonne$': self.ajouterpersonne,
             '^/new$': self.nouveau,
@@ -332,8 +364,8 @@ class Route():
             '^/update_user$':self.update_user,
             "^/seeuser/([0-9]+)$":self.seeuser,
             "^/edituser/([0-9]+)$":self.edit_user,
-                                                            "^/deleteuser/([0-9]+)$":self.delete_user,
-                                                                                '^/login$':self.login,
+            "^/deleteuser/([0-9]+)$":self.delete_user,
+            '^/login$':self.login,
 
                                                                                                     '^/users$':self.myusers,
                     '^/$': self.hello
@@ -345,15 +377,20 @@ class Route():
                mycase=ROUTES[route]
                x=(re.match(route,path))
                print(True if x else False)
+               #code bon pour les erreurs dans le code python
                if x:
                    params["routeparams"]=x.groups()
                    try:
-                       self.Program.set_html(html=mycase(params))
-                   except Exception:  
-                       self.Program.set_html(html="<p>une erreur s'est produite "+str(traceback.format_exc())+"</p><a href=\"/\">retour à l'accueil</a>")
+                       html=mycase(params)
+                   except Exception as e:
+                       print("erreur"+str(e),traceback.format_exc())
+                       html=("<p>une erreur s'est produite dans le code server  "+(traceback.format_exc())+"</p><a href=\"/\">retour à l'accueil</a>").encode("utf-8")
+                       print(html)
+                   self.Program.set_html(html=html)
                    self.Program.clear_notice()
                    self.Program.redirect_if_not_logged_in()
                    return self.Program
                else:
                    self.Program.set_html(html="<p>la page n'a pas été trouvée</p><a href=\"/\">retour à l'accueil</a>")
+
         return self.Program

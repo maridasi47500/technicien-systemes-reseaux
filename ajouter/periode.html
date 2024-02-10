@@ -1,0 +1,12 @@
+<h1>
+<h1>ajouter des periodes
+</h1>
+<form action="/nouvelleperiode" method="post">
+<div class="field">
+<label for="periode_nom">nom (ex: <%=str(datetime.date.today())[0:4]%>)</label>
+<input type="text" id="periode_nom" name="name"/>
+</div>
+<div class="actions">
+<input type="submit" value="ajouter période"/>
+</div>
+</form>
