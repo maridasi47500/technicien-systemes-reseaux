@@ -7,6 +7,7 @@ from place import Place
 from person import Person
 from country import Country
 from periode import Periode
+from stuff import Stuff
 from group_stuf import Group_stuff
 from hack import Hack
 from gossip import Gossip
@@ -29,6 +30,7 @@ class Route():
         self.dbRecording=Myrecording()
         self.dbRumeur=Gossip()
         self.dbLieu=Place()
+        self.dbStuff=Stuff()
         self.dbGroupStuff=Group_stuff()
         self.dbPeriode=Periode()
         self.dbPersonne=Person()
@@ -142,12 +144,30 @@ class Route():
         else:
           self.set_code422(True)
         return self.render_some_json("welcome/redirect.json")
+    def nouvelevent(self,search):
+        myparam=self.get_post_data()(params=("name","stuff_id","periode_id"))
+        self.render_figure.set_param("redirect","/")
+        x=self.dbGroupStuff.create(myparam)
+        if x:
+          self.set_notice("votre event a été ajoutée")
+        else:
+          self.set_code422(True)
+        return self.render_some_json("welcome/redirect.json")
+    def nouveaustuff(self,search):
+        myparam=self.get_post_data()(params=("name","group_stuff_id"))
+        self.render_figure.set_param("redirect","/")
+        x=self.dbGroupStuff.create(myparam)
+        if x:
+          self.set_notice("votre stuff a été ajoutée")
+        else:
+          self.set_code422(True)
+        return self.render_some_json("welcome/redirect.json")
     def nouveaugroupstuff(self,search):
         myparam=self.get_post_data()(params=("name",))
         self.render_figure.set_param("redirect","/")
         x=self.dbGroupStuff.create(myparam)
         if x:
-          self.set_notice("votre personne a été ajoutée")
+          self.set_notice("votre group stuf a été ajoutée")
         else:
           self.set_code422(True)
         return self.render_some_json("welcome/redirect.json")
@@ -238,6 +258,15 @@ class Route():
             self.set_json("{\"redirect\":\"/youbank\"}")
             print("session login",self.Program.get_session())
         return self.render_figure.render_json()
+    def ajouterevent(self,search):
+
+        self.render_figure.set_param("periode",self.dbPeriode.getall())
+        self.render_figure.set_param("stuff",self.dbStuff.getall())
+        return self.render_figure.render_figure("ajouter/event.html")
+    def ajouterstuff(self,search):
+
+        self.render_figure.set_param("group_stuff",self.dbGroupStuff.getall())
+        return self.render_figure.render_figure("ajouter/stuff.html")
     def ajoutergroupstuff(self,search):
 
         return self.render_figure.render_figure("ajouter/group_stuff.html")
@@ -342,6 +371,10 @@ class Route():
             ROUTES={
             "^/personne/([0-9]+)$":self.voirpersonne,
             "^/lieu/([0-9]+)$":self.voirlieu,
+            '^/nouvelevent$': self.nouvelevent,
+            '^/ajouterevent$': self.ajouterevent,
+            '^/nouveaustuff$': self.nouveaustuff,
+            '^/ajouterstuff$': self.ajouterstuff,
             '^/nouveaugroupstuff$': self.nouveaugroupstuff,
             '^/ajoutergroupstuff$': self.ajoutergroupstuff,
             '^/nouvelleperiode$': self.nouvelleperiode,

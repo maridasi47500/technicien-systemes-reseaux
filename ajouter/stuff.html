@@ -1,0 +1,18 @@
+<h1>
+<h1>ajouter des job/truc
+</h1>
+<form action="/nouveaustuff" method="post">
+<div class="field">
+<label for="styledejob_nom">nom (ex:nage)</label>
+<input type="text" id="styledejob_nom" name="name"/>
+</div>
+<div class="field">
+<label for="styledejob_group_stuff_id">style de job (ex: sport d'eau)</label>
+<select id="styledejob_group_stuff_id" name="group_stuff_id">
+<%=render_collection(collection=params['group_stuff'], partial='welcome/_group_stuff.html', as_='stuff')%>
+</select>
+</div>
+<div class="actions">
+<input type="submit" value="ajouter période"/>
+</div>
+</form>

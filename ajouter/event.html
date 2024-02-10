@@ -1,0 +1,24 @@
+<h1>
+<h1>ajouter des evenements
+</h1>
+<form action="/nouvelevent" method="post">
+<div class="field">
+<label for="styledejob_nom">nom (ex:sit de moussaillon)</label>
+<input type="text" id="styledejob_nom" name="name"/>
+</div>
+<div class="field">
+<label for="styledejob_stuff_id">style de job (ex: fairesyte en python)</label>
+<select id="styledejob_stuff_id" name="stuff_id">
+<%=render_collection(collection=params['stuff'], partial='welcome/_group_stuff.html', as_='stuff')%>
+</select>
+</div>
+<div class="field">
+<label for="styledejob_periode_id">style de job (ex: creer 1 site web)</label>
+<select id="styledejob_periode_id" name="periode_id">
+<%=render_collection(collection=params['periode'], partial='welcome/_group_stuff.html', as_='stuff')%>
+</select>
+</div>
+<div class="actions">
+<input type="submit" value="ajouter période"/>
+</div>
+</form>

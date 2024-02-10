@@ -1,0 +1,16 @@
+<h1>
+<h1>ajouter des styles de job
+</h1>
+<form action="/nouvelleperiode" method="post">
+<div class="field">
+<label for="styledejob_nom">nom (ex: sport d'eau)</label>
+<input type="text" id="styledejob_nom" name="name"/>
+</div>
+<div class="field">
+<label for="styledejob_group_stuff_id">style de job (ex: sport d'eau)</label>
+<input type="text" id="styledejob_group_stuff_id" name="name"/>
+</div>
+<div class="actions">
+<input type="submit" value="ajouter période"/>
+</div>
+</form>
