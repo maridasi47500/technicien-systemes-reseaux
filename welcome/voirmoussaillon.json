@@ -1,0 +1,6 @@
+{"moussaillon":{
+"nom":"<%=params["user"]["name"]%>",
+"id":"<%=params["user"]["id"]%>",
+"pays":"<%=params["user"]["code"]%>"
+}
+}

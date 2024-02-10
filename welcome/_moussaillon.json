@@ -1,0 +1,5 @@
+<%="," if paspremier else ""%>{
+"nom":"<%=user["name"]%>",
+"id":"<%=user["id"]%>",
+"pays":"<%=user["code"]%>"
+}

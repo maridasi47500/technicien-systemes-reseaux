@@ -2,6 +2,7 @@
 <h1>ajouter des evenements
 </h1>
 <form action="/nouvelevent" method="post">
+<input type="hidden" id="styledejob_person_ids" name="person_ids"/>
 <div class="field">
 <label for="styledejob_nom">nom (ex:sit de moussaillon)</label>
 <input type="text" id="styledejob_nom" name="name"/>
@@ -17,6 +18,14 @@
 <select id="styledejob_periode_id" name="periode_id">
 <%=render_collection(collection=params['periode'], partial='welcome/_group_stuff.html', as_='stuff')%>
 </select>
+</div>
+<div class="field">
+<label for="styledejob_person_ids">mousaillons de cet evenement</label>
+<input type="text" name="hey" id="nom_personne" />
+<select id="heyperson">
+</select>
+<div id="moussaillon">
+</div>
 </div>
 <div class="actions">
 <input type="submit" value="ajouter période"/>

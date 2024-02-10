@@ -8,7 +8,7 @@ from person import Person
 from country import Country
 from periode import Periode
 from stuff import Stuff
-from group_stuf import Group_stuff
+from group_stuff import Group_stuff
 from hack import Hack
 from gossip import Gossip
 
@@ -87,6 +87,17 @@ class Route():
         return self.render_figure.render_figure("welcome/chat.html")
     def welcome(self,search):
         return self.render_figure.render_figure("welcome/index.html")
+    def voirmoussaillon(self,params):
+        getparams=("id",)
+        print("get param, action see my new",getparams)
+        myparam=self.get_this_route_param(getparams,params)
+        personn1=self.dbPersonne.getbyid(myparam["id"])
+        self.render_figure.set_param("user",personn1)
+        return self.render_some_json("welcome/voirmoussaillon.json")
+    def getmoussaillon(self,search):
+        hi=self.dbPersonne.getall()
+        self.render_figure.set_param("moussaillon",self.dbPersonne.getallbyname(search["id"][0]))
+        return self.render_some_json("welcome/moussaillon.json")
     def audio_save(self,search):
         myparam=self.get_post_data()(params=("recording",))
         hi=self.dbRecording.create(myparam)
@@ -145,9 +156,9 @@ class Route():
           self.set_code422(True)
         return self.render_some_json("welcome/redirect.json")
     def nouvelevent(self,search):
-        myparam=self.get_post_data()(params=("name","stuff_id","periode_id"))
+        myparam=self.get_post_data()(params=("name","stuff_id","periode_id","person_ids"))
         self.render_figure.set_param("redirect","/")
-        x=self.dbGroupStuff.create(myparam)
+        x=self.dbEvent.create(myparam)
         if x:
           self.set_notice("votre event a été ajoutée")
         else:
@@ -229,6 +240,7 @@ class Route():
         myparam=self.get_this_route_param(getparams,params)
         personn1=self.dbPersonne.getbyid(myparam["id"])
         self.render_figure.set_param("person",personn1)
+        self.render_figure.set_param("event",self.dbEvent.getallbypersonid(personn1["id"]))
         return self.render_figure.render_figure("ajouter/voirpersonne.html")
     def seeuser(self,params={}):
         getparams=("id",)
@@ -369,6 +381,7 @@ class Route():
             path=path.split("?")[0]
             print("link route ",path)
             ROUTES={
+            "^/moussaillon/([0-9]+).json$":self.voirmoussaillon,
             "^/personne/([0-9]+)$":self.voirpersonne,
             "^/lieu/([0-9]+)$":self.voirlieu,
             '^/nouvelevent$': self.nouvelevent,
@@ -378,6 +391,7 @@ class Route():
             '^/nouveaugroupstuff$': self.nouveaugroupstuff,
             '^/ajoutergroupstuff$': self.ajoutergroupstuff,
             '^/nouvelleperiode$': self.nouvelleperiode,
+            '^/getmoussaillon$': self.getmoussaillon,
             '^/ajouterperiode$': self.ajouterperiode,
             '^/nouvellepersonne$': self.nouvellepersonne,
             '^/ajouterpersonne$': self.ajouterpersonne,

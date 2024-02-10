@@ -1,5 +1,37 @@
 
 $(function(){
+if ($("#nom_personne").length > 0){
+$("#nom_personne").keydown(function(){
+var thisval=$(this).val();
+if (thisval.length > 0){
+$.ajax({url:"/getmoussaillon?id="+thisval,
+success: function(data){
+var hey=data.moussaillon;
+heyperson.innerHTML="<option></option>";
+for (var i = 0;i<hey.length ;i++){
+heyperson.innerHTML+="<option value=\""+hey[i].id+"\">"+hey[i].pays+" "+hey[i].nom+"</option>";
+
+}
+}
+});
+}
+});
+/* search nom persone*/
+$("#heyperson").change(function(){
+var thisval=$(this).val();
+if (thisval.length > 0){
+//alert(thisval);
+$.ajax({url:"/moussaillon/"+thisval+".json",
+success: function(data){
+var hey=data.moussaillon;
+document.getElementById("moussaillon").innerHTML+="<div class=\"mouss\"><input type=\"checkbox\" name=\"my_person_ids\" checked=\"checked\" id=\"moussaillonid"+hey.id+"\" onchange=\"$('[name=person_ids]').val($('[name=my_person_ids]:checked').toArray().map(x=>String(x.value)).join(","));\" value=\""+hey.id+"\"/><label for=\"moussaillonid\">"+hey.pays+" "+hey.nom+"</label></div>";
+$('[name=person_ids]').val($('[name=my_person_ids]:checked').toArray().map(x=>String(x.value)).join(","));
+}
+});
+}
+});
+/* search nom persone*/
+}
 if ($("#personne_photo").length > 0 || $("#lieu_photo").length > 0){
 var fileElem=$("#personne_photo").length > 0 ? personne_photo : lieu_photo;
 fileElem.addEventListener("change", handleFiles, false);

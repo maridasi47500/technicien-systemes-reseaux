@@ -97,6 +97,7 @@ class RenderFigure():
         try:
             myview=open(os.path.abspath("./"+partial),"r").read()
             mystr=""
+            k=[]
             i=0
             paspremier=False
             ligne=0
@@ -110,37 +111,40 @@ class RenderFigure():
                 loc[as_]=x
 
                 for j in myview.split("<%"):
-                    ligne+=j.count("\r\n")
-                    if j[0] == "=":
-                        j=j[1:]
-                        if "%>" not in j:
-                            mystr+=j
-                            continue
+                    try: 
+                        ligne+=j.count("\r\n")
+                        if j[0] == "=":
+                            j=j[1:]
+                            if "%>" not in j:
+                                mystr+=j
+                                continue
 
-                        k=j.split("%>")
-                        print(dict(x))
-                        if k[0]:
-                            print(k[0], "content render")
-                            print(k[0])
-                            l=exec("myvalue="+k[0], globals(), loc)
-                            mystr+=str(loc["myvalue"])
-                        if k[1]:
-                            mystr+=k[1]
-                    else:
-                        if "%>" not in j:
-                            mystr+=j
-                            continue
+                            k=j.split("%>")
+                            print(dict(x))
+                            if k[0]:
+                                print(k[0], "content render")
+                                print(k[0])
+                                l=exec("myvalue="+k[0], globals(), loc)
+                                mystr+=str(loc["myvalue"])
+                            if k[1]:
+                                mystr+=k[1]
+                        else:
+                            if "%>" not in j:
+                                mystr+=j
+                                continue
 
-                        k=j.split("%>")
+                            k=j.split("%>")
 
-                        print(dict(x))
-                        if k[0]:
-                            print(k[0], "content render")
-                            print(k[0])
-                            l=exec(k[0], globals(), loc)
-                            #mystr+=str(loc["myvalue"])
-                        if k[1]:
-                            mystr+=k[1]
+                            print(dict(x))
+                            if k[0]:
+                                print(k[0], "content render")
+                                print(k[0])
+                                l=exec(k[0], globals(), loc)
+                                #mystr+=str(loc["myvalue"])
+                            if k[1]:
+                                mystr+=k[1]
+                    except:
+                        print("hey")
                 i+=1
                 paspremier=True
             return mystr
