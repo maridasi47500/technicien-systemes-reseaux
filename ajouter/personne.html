@@ -11,6 +11,13 @@ ajouter des personnes
 <label for="personne_photo">photo</label>
 <input type="file" id="personne_photo" name="pic" />
 </div>
+<div class="field">
+<label for="personne_pays">pays</label>
+<select id="personne_pays" name="country_id">
+<%=render_collection(collection=params['pays'], partial='welcome/_pays.html', as_='pays')%>
+
+</select>
+</div>
 <div class="actions">
 <input type="submit" value="ajouter personne"/>
 </div>

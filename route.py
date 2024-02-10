@@ -5,6 +5,7 @@ from user import User
 from myrecording import Myrecording
 from place import Place
 from person import Person
+from country import Country
 from hack import Hack
 from gossip import Gossip
 
@@ -27,6 +28,7 @@ class Route():
         self.dbRumeur=Gossip()
         self.dbLieu=Place()
         self.dbPersonne=Person()
+        self.dbCountry=Country()
         self.dbHack=Hack()
         self.render_figure=RenderFigure(self.Program)
         self.getparams=("id",)
@@ -128,7 +130,7 @@ class Route():
           self.set_code422(True)
         return self.render_some_json("welcome/redirect.json")
     def nouvellepersonne(self,search):
-        myparam=self.get_post_data()(params=("name","pic",))
+        myparam=self.get_post_data()(params=("name","pic","country_id"))
         self.render_figure.set_param("redirect","/")
         x=self.dbPersonne.create(myparam)
         if x:
@@ -224,6 +226,7 @@ class Route():
         return self.render_figure.render_json()
     def ajouterpersonne(self,search):
 
+        self.render_figure.set_param("pays",self.dbCountry.getall())
         return self.render_figure.render_figure("ajouter/personne.html")
     def ajouterlieu(self,search):
         return self.render_figure.render_only_figure("ajouter/lieu.html")

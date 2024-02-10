@@ -3,32 +3,31 @@ import sqlite3
 import sys
 import re
 from model import Model
-class Person(Model):
+class Country(Model):
     def __init__(self):
         self.con=sqlite3.connect(self.mydb)
         self.con.row_factory = sqlite3.Row
         self.cur=self.con.cursor()
-        self.cur.execute("""create table if not exists person(
+        self.cur.execute("""create table if not exists country(
         id integer primary key autoincrement,
         name text,
-            pic text,
-            country_id text
+            code text
                     );""")
         self.con.commit()
         #self.con.close()
     def getall(self):
-        self.cur.execute("select * from person")
+        self.cur.execute("select * from country")
 
         row=self.cur.fetchall()
         return row
     def deletebyid(self,myid):
 
-        self.cur.execute("delete from person where id = ?",(myid,))
+        self.cur.execute("delete from country where id = ?",(myid,))
         job=self.cur.fetchall()
         self.con.commit()
         return None
     def getbyid(self,myid):
-        self.cur.execute("select * from person where id = ?",(myid,))
+        self.cur.execute("select * from country where id = ?",(myid,))
         row=dict(self.cur.fetchone())
         print(row["id"], "row id")
         job=self.cur.fetchall()
@@ -51,14 +50,14 @@ class Person(Model):
         print(myhash,myhash.keys())
         myid=None
         try:
-          self.cur.execute("insert into person (name,pic,country_id) values (:name,:pic,:country_id)",myhash)
+          self.cur.execute("insert into country (name,code) values (:name,:code)",myhash)
           self.con.commit()
           myid=str(self.cur.lastrowid)
         except Exception as e:
           print("my error"+str(e))
         azerty={}
-        azerty["person_id"]=myid
-        azerty["notice"]="votre person a été ajouté"
+        azerty["country_id"]=myid
+        azerty["notice"]="votre country a été ajouté"
         return azerty
 
 
