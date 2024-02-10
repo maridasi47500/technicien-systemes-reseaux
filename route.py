@@ -207,17 +207,9 @@ class Route():
         getparams=("id",)
         print("get param, action see my new",getparams)
         myparam=self.get_this_route_param(getparams,params)
-        try:
-          personn1=self.dbPersonne.getbyid(myparam["id"])
-          self.render_figure.set_param("person",personn1)
-
-          if not personn1:
-            self.Program.set_code422(True);
-            return self.render_some_json("ajouter/personne1.json")
-          return self.render_some_json("ajouter/personne.json")
-        except:
-          self.Program.set_code422(True);
-          return self.render_some_json("ajouter/personne1.json")
+        personn1=self.dbPersonne.getbyid(myparam["id"])
+        self.render_figure.set_param("person",personn1)
+        return self.render_figure.render_figure("ajouter/voirpersonne.html")
     def seeuser(self,params={}):
         getparams=("id",)
         print("get param, action see my new",getparams)
