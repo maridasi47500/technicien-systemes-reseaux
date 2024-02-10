@@ -1,0 +1,27 @@
+<h1>
+ajouter des images
+</h1>
+<form action="/nouvelleimage" method="post">
+<div class="field">
+<label for="image_text">ce que c'est cette image</label>
+<input type="text" id="image_text" name="text"/>
+</div>
+<div class="field">
+<label for="image_photo">uploader la photo</label>
+<input type="file" id="image_photo" name="pic" />
+</div>
+<div class="field">
+<label for="image_mf">image d'1 femme/homme</label>
+<select id="image_mf" name="mf">
+<option value="f">femme</option>
+<option value="m">homme</option>
+
+</select>
+</div>
+<div class="actions">
+<input type="submit" value="ajouter image"/>
+</div>
+</form>
+<div id="fileList">
+</div>
+<img class="mypic" id="blah"/>

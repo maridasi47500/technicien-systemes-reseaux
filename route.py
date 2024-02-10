@@ -87,17 +87,6 @@ class Route():
         return self.render_figure.render_figure("welcome/chat.html")
     def welcome(self,search):
         return self.render_figure.render_figure("welcome/index.html")
-    def voirmoussaillon(self,params):
-        getparams=("id",)
-        print("get param, action see my new",getparams)
-        myparam=self.get_this_route_param(getparams,params)
-        personn1=self.dbPersonne.getbyid(myparam["id"])
-        self.render_figure.set_param("user",personn1)
-        return self.render_some_json("welcome/voirmoussaillon.json")
-    def getmoussaillon(self,search):
-        hi=self.dbPersonne.getall()
-        self.render_figure.set_param("moussaillon",self.dbPersonne.getallbyname(search["id"][0]))
-        return self.render_some_json("welcome/moussaillon.json")
     def audio_save(self,search):
         myparam=self.get_post_data()(params=("recording",))
         hi=self.dbRecording.create(myparam)
@@ -119,71 +108,8 @@ class Route():
         myparam=self.get_post_data()(params=("script","missiontarget_id","missiontype_id","missionprogram_id",))
         #hi=self.dbMissionscript.create(myparam)
         return self.render_some_json("welcome/mypic.json")
-    def nouveaulieu(self,search):
-        myparam=self.get_post_data()(params=("pic","name",))
-        self.render_figure.set_param("redirect","/")
-        x=self.dbLieu.create(myparam)
-        if x:
-          self.set_notice("votre lieu a été ajouté")
-        else:
-          self.set_code422(True)
-        return self.render_some_json("welcome/redirect.json")
-    def nouveauhack(self,search):
-        myparam=self.get_post_data()(params=("person_id","place_id","text",))
-        self.render_figure.set_param("redirect","/")
-        x=self.dbHack.create(myparam)
-        if x:
-          self.set_notice("votre hack a été ajouté")
-        else:
-          self.set_code422(True)
-        return self.render_some_json("welcome/redirect.json")
-    def nouvellerumeur(self,search):
-        myparam=self.get_post_data()(params=("person_id","place_id","text",))
-        self.render_figure.set_param("redirect","/")
-        x=self.dbRumeur.create(myparam)
-        if x:
-          self.set_notice("votre rumeur a été ajoutée")
-        else:
-          self.set_code422(True)
-        return self.render_some_json("welcome/redirect.json")
-    def nouvelleperiode(self,search):
-        myparam=self.get_post_data()(params=("name",))
-        self.render_figure.set_param("redirect","/")
-        x=self.dbPeriode.create(myparam)
-        if x:
-          self.set_notice("votre periode a été ajoutée")
-        else:
-          self.set_code422(True)
-        return self.render_some_json("welcome/redirect.json")
-    def nouvelevent(self,search):
-        myparam=self.get_post_data()(params=("name","stuff_id","periode_id","person_ids"))
-        self.render_figure.set_param("redirect","/")
-        x=self.dbEvent.create(myparam)
-        if x:
-          self.set_notice("votre event a été ajoutée")
-        else:
-          self.set_code422(True)
-        return self.render_some_json("welcome/redirect.json")
-    def nouveaustuff(self,search):
-        myparam=self.get_post_data()(params=("name","group_stuff_id"))
-        self.render_figure.set_param("redirect","/")
-        x=self.dbGroupStuff.create(myparam)
-        if x:
-          self.set_notice("votre stuff a été ajoutée")
-        else:
-          self.set_code422(True)
-        return self.render_some_json("welcome/redirect.json")
-    def nouveaugroupstuff(self,search):
-        myparam=self.get_post_data()(params=("name",))
-        self.render_figure.set_param("redirect","/")
-        x=self.dbGroupStuff.create(myparam)
-        if x:
-          self.set_notice("votre group stuf a été ajoutée")
-        else:
-          self.set_code422(True)
-        return self.render_some_json("welcome/redirect.json")
-    def nouvellepersonne(self,search):
-        myparam=self.get_post_data()(params=("name","pic","country_id"))
+    def nouvelleimage(self,search):
+        myparam=self.get_post_data()(params=("text","pic","mf"))
         self.render_figure.set_param("redirect","/")
         x=self.dbPersonne.create(myparam)
         if x:
@@ -270,35 +196,8 @@ class Route():
             self.set_json("{\"redirect\":\"/youbank\"}")
             print("session login",self.Program.get_session())
         return self.render_figure.render_json()
-    def ajouterevent(self,search):
-
-        self.render_figure.set_param("periode",self.dbPeriode.getall())
-        self.render_figure.set_param("stuff",self.dbStuff.getall())
-        return self.render_figure.render_figure("ajouter/event.html")
-    def ajouterstuff(self,search):
-
-        self.render_figure.set_param("group_stuff",self.dbGroupStuff.getall())
-        return self.render_figure.render_figure("ajouter/stuff.html")
-    def ajoutergroupstuff(self,search):
-
-        return self.render_figure.render_figure("ajouter/group_stuff.html")
-    def ajouterperiode(self,search):
-
-        return self.render_figure.render_figure("ajouter/periode.html")
-    def ajouterpersonne(self,search):
-
-        self.render_figure.set_param("pays",self.dbCountry.getall())
-        return self.render_figure.render_figure("ajouter/personne.html")
-    def ajouterlieu(self,search):
-        return self.render_figure.render_only_figure("ajouter/lieu.html")
-    def ajouterhack(self,search):
-        self.render_figure.set_param("personnes",self.dbPersonne.getall())
-        self.render_figure.set_param("lieux",self.dbLieu.getall())
-        return self.render_figure.render_only_figure("ajouter/hack.html")
-    def ajouterrumeur(self,search):
-        self.render_figure.set_param("personnes",self.dbPersonne.getall())
-        self.render_figure.set_param("lieux",self.dbLieu.getall())
-        return self.render_figure.render_only_figure("ajouter/rumeur.html")
+    def ajouterimage(self,search):
+        return self.render_figure.render_only_figure("ajouter/image.html")
     def nouveau(self,search):
         return self.render_figure.render_figure("welcome/new.html")
     def getlyrics(self,params={}):
@@ -381,20 +280,8 @@ class Route():
             path=path.split("?")[0]
             print("link route ",path)
             ROUTES={
-            "^/moussaillon/([0-9]+).json$":self.voirmoussaillon,
-            "^/personne/([0-9]+)$":self.voirpersonne,
-            "^/lieu/([0-9]+)$":self.voirlieu,
-            '^/nouvelevent$': self.nouvelevent,
-            '^/ajouterevent$': self.ajouterevent,
-            '^/nouveaustuff$': self.nouveaustuff,
-            '^/ajouterstuff$': self.ajouterstuff,
-            '^/nouveaugroupstuff$': self.nouveaugroupstuff,
-            '^/ajoutergroupstuff$': self.ajoutergroupstuff,
-            '^/nouvelleperiode$': self.nouvelleperiode,
-            '^/getmoussaillon$': self.getmoussaillon,
-            '^/ajouterperiode$': self.ajouterperiode,
-            '^/nouvellepersonne$': self.nouvellepersonne,
-            '^/ajouterpersonne$': self.ajouterpersonne,
+            '^/nouvelleimage$': self.nouvelleimage,
+            '^/ajouterimage$': self.ajouterimage,
             '^/new$': self.nouveau,
             '^/welcome$': self.welcome,
             '^/signin$': self.signin,

@@ -1,5 +1,0 @@
-{
-"moussaillon": [
-<%=render_collection(collection=params['moussaillon'], partial='welcome/_moussaillon.json', as_='user')%>
-]
-}

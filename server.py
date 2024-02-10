@@ -24,6 +24,7 @@ req.cookies["email"]=""
 req.cookies["name"]=""
 req.cookies["user_id"]=""
 req.cookies["notice"]=""
+req.cookies["nbmessage"]=""
 from urllib.parse import urlencode
 # my server
 import time, socket, threading

@@ -99,6 +99,14 @@
 				  </button>
 
 				    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+<div class="d-flex">
+                            <%="<form action=\"/logmeout\" method=\"post\"><input value=\"se deconnecter\" type=\"submit\"/></form>" if session['name'] != "" else ""%>
+
+                                    <%="bienvenue "+session['name'] if session['name'] != "" else ""%>
+                                    <span><%=session['nbmessage']%><span id="lblCartCount">0</span></span>
+
+            </div>
+
 					        <ul class="navbar-nav mr-auto">
 							      <li class="nav-item active">
 								              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -108,19 +116,10 @@
 													        </li>
 														      <li class="nav-item dropdown">
 															              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-																	                Moussaillons
+																	                Ajouter
 																			        </a>
 																				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-																						          <a class="dropdown-item" href="/ajouterpersonne">ajouter un moussaillon</a>
-																						          <a class="dropdown-item" href="/ajouterevent">ajouter un evenement</a>
-																						          <a class="dropdown-item" href="/ajoutergroupstuff">ajouter un style de job d'1 moussaillon</a>
-																						          <a class="dropdown-item" href="/ajouterperiode">ajouter une periode</a>
-																						          <a class="dropdown-item" href="/ajouterstuff">ajouter un truc/job</a>
-																						          <a class="dropdown-item" href="/recherche avancée">recherche avancée</a>
-																						          <a class="dropdown-item" href="/recherche avancée">related moussaillon (cherchr des moussaillons qui sont la tante d'1 autre olympien et qui a participe à n'importe quel jeu)</a>
-																							            <a class="dropdown-item" href="#">double country (chercher moussaillon qui a 2 pays)</a>
-																							            <a class="dropdown-item" href="#">metier double (chrcher moussaillon qui a 2 métier)</a>
-																							            <a class="dropdown-item" href="#">compter les moussaillons (par pays, par discipline)</a>
+																							            <a class="dropdown-item" href="/ajouterimage">ajouter une image</a>
 																								              <div class="dropdown-divider"></div>
 																									                <a class="dropdown-item" href="#">Something else here</a>
 																											        </div>

@@ -9,11 +9,13 @@ class Directory():
     css=False
     def __init__(self, title):
         self.title=title
-        self.session={"email":"","user_id":"","name":"","notice":""}
+        self.session={}
         self.path="./"
         self.html=""
         self.url=""
-        self.mesparams=["email","name","user_id","notice"]
+        self.mesparams=["email","name","user_id","notice","nbmessage"]
+        for y in self.mesparams:
+          self.session[y]=""
         self.redirect=False
     def logout(self):
         for x in self.mesparams:
