@@ -103,7 +103,7 @@
                             <%="<form action=\"/logmeout\" method=\"post\"><input value=\"se deconnecter\" type=\"submit\"/></form>" if session['name'] != "" else ""%>
 
                                     <%="bienvenue "+session['name'] if session['name'] != "" else ""%>
-                                    <span><%=session['nbmessage']%><span id="lblCartCount">0</span></span>
+                                    <span class="mymessages">&#9993;<span id="lblCartCount"><%=session['nbmessage']%></span></span>
 
             </div>
 
@@ -120,6 +120,8 @@
 																			        </a>
 																				        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 																							            <a class="dropdown-item" href="/ajouterimage">ajouter une image</a>
+																							            <a class="dropdown-item" href="/ajouterimagetext">ajouter une image avec un text</a>
+
 																								              <div class="dropdown-divider"></div>
 																									                <a class="dropdown-item" href="#">Something else here</a>
 																											        </div>

@@ -1,0 +1,39 @@
+<h1>
+ajouter des images avec des text
+</h1>
+
+<form action="/nouvelleimage" method="post">
+<div class="field">
+<label for="chercher_image_mf">chercher 1 image de femme/homme</label>
+<select id="chercher_image_mf" name="mf">
+<option value="">image de femme/homme</option>
+<option value="f">femme</option>
+<option value="m">homme</option>
+
+</select>
+</div>
+<div class="field">
+<label for="image_id">choisir 1 image</label>
+<select id="image_id" name="image_id">
+
+</select>
+</div>
+<div class="field">
+<label for="image_text">écrre du text</label>
+<textarea id="image_text" name="text"> </textarea>
+</div>
+<div class="field">
+<label for="image_mf">image d'1 femme/homme</label>
+<select id="image_mf" name="mf">
+<option value="f">femme</option>
+<option value="m">homme</option>
+
+</select>
+</div>
+<div class="actions">
+<input type="submit" value="ajouter image"/>
+</div>
+</form>
+<div id="fileList">
+</div>
+<img class="mypic" id="blah"/>

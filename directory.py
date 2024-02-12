@@ -16,6 +16,7 @@ class Directory():
         self.mesparams=["email","name","user_id","notice","nbmessage"]
         for y in self.mesparams:
           self.session[y]=""
+        self.session["nbmessage"]="0"
         self.redirect=False
     def logout(self):
         for x in self.mesparams:

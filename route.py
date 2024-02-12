@@ -7,6 +7,7 @@ from place import Place
 from person import Person
 from country import Country
 from periode import Periode
+from image import Image
 from stuff import Stuff
 from group_stuff import Group_stuff
 from hack import Hack
@@ -34,6 +35,7 @@ class Route():
         self.dbGroupStuff=Group_stuff()
         self.dbPeriode=Periode()
         self.dbPersonne=Person()
+        self.dbImage=Image()
         self.dbCountry=Country()
         self.dbHack=Hack()
         self.render_figure=RenderFigure(self.Program)
@@ -111,11 +113,12 @@ class Route():
     def nouvelleimage(self,search):
         myparam=self.get_post_data()(params=("text","pic","mf"))
         self.render_figure.set_param("redirect","/")
-        x=self.dbPersonne.create(myparam)
-        if x:
-          self.set_notice("votre personne a été ajoutée")
+        x=self.dbImage.create(myparam)
+        if x["image_id"]:
+          self.set_notice("votre image a été ajoutée")
         else:
-          self.set_code422(True)
+          self.Program.set_code422(True)
+          self.set_notice("erreur quand votre image a été ajoutée")
         return self.render_some_json("welcome/redirect.json")
     def monscript(self,search):
         myparam=self.get_post_data()(params=("name","content",))
@@ -197,7 +200,7 @@ class Route():
             print("session login",self.Program.get_session())
         return self.render_figure.render_json()
     def ajouterimage(self,search):
-        return self.render_figure.render_only_figure("ajouter/image.html")
+        return self.render_figure.render_figure("ajouter/image.html")
     def nouveau(self,search):
         return self.render_figure.render_figure("welcome/new.html")
     def getlyrics(self,params={}):
