@@ -1,0 +1,6 @@
+<%="," if paspremier else ""%>{
+	"id": "<%=image["id"]%>",
+	"mf": "<%=image["mf"]%>",
+	"pic": "<%=image["pic"]%>",
+	"text": "<%=image["text"]%>"
+}

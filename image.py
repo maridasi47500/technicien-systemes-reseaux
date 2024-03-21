@@ -16,6 +16,11 @@ class Image(Model):
                     );""")
         self.con.commit()
         #self.con.close()
+    def getallbymf(self,mf):
+        self.cur.execute("select * from image where mf = ?", (mf,))
+
+        row=self.cur.fetchall()
+        return row
     def getall(self):
         self.cur.execute("select * from image")
 

@@ -4,14 +4,9 @@ from myscript import Myscript
 from user import User
 from myrecording import Myrecording
 from place import Place
-from person import Person
-from country import Country
-from periode import Periode
 from image import Image
+from imagetext import Imagetext
 from stuff import Stuff
-from group_stuff import Group_stuff
-from hack import Hack
-from gossip import Gossip
 
 
 from mypic import Pic
@@ -29,15 +24,10 @@ class Route():
         self.mysession={"notice":None,"email":None,"name":None}
         self.dbScript=Myscript()
         self.dbRecording=Myrecording()
-        self.dbRumeur=Gossip()
         self.dbLieu=Place()
         self.dbStuff=Stuff()
-        self.dbGroupStuff=Group_stuff()
-        self.dbPeriode=Periode()
-        self.dbPersonne=Person()
         self.dbImage=Image()
-        self.dbCountry=Country()
-        self.dbHack=Hack()
+        self.dbImagetext=Imagetext()
         self.render_figure=RenderFigure(self.Program)
         self.getparams=("id",)
     def set_post_data(self,x):
@@ -110,6 +100,16 @@ class Route():
         myparam=self.get_post_data()(params=("script","missiontarget_id","missiontype_id","missionprogram_id",))
         #hi=self.dbMissionscript.create(myparam)
         return self.render_some_json("welcome/mypic.json")
+    def nouvelleimagetext(self,search):
+        myparam=self.get_post_data()(params=("text","image_id"))
+        self.render_figure.set_param("redirect","/")
+        x=self.dbImagetext.create(myparam)
+        if x["image_id"]:
+          self.set_notice("votre image a été ajoutée avec du text")
+        else:
+          self.Program.set_code422(True)
+          self.set_notice("erreur quand votre image a été ajoutée")
+        return self.render_some_json("welcome/redirect.json")
     def nouvelleimage(self,search):
         myparam=self.get_post_data()(params=("text","pic","mf"))
         self.render_figure.set_param("redirect","/")
@@ -131,7 +131,6 @@ class Route():
         self.render_figure.set_param("enregistrer",True)
         return self.render_figure.render_figure("welcome/radio.html")
     def hello(self,search):
-        self.render_figure.set_param("users",self.dbPersonne.gettrois())
         print("hello action")
         return self.render_figure.render_figure("welcome/index.html")
     def delete_user(self,params={}):
@@ -163,13 +162,6 @@ class Route():
         except:
           self.Program.set_code422(True);
           return self.render_some_json("ajouter/lieu1.json")
-    def voirpersonne(self,params={}):
-        getparams=("id",)
-        print("get param, action see my new",getparams)
-        myparam=self.get_this_route_param(getparams,params)
-        personn1=self.dbPersonne.getbyid(myparam["id"])
-        self.render_figure.set_param("person",personn1)
-        self.render_figure.set_param("event",self.dbEvent.getallbypersonid(personn1["id"]))
         return self.render_figure.render_figure("ajouter/voirpersonne.html")
     def seeuser(self,params={}):
         getparams=("id",)
@@ -201,6 +193,11 @@ class Route():
         return self.render_figure.render_json()
     def ajouterimage(self,search):
         return self.render_figure.render_figure("ajouter/image.html")
+    def ajouterimagetext(self,search):
+        return self.render_figure.render_figure("ajouter/imagetext.html")
+    def photos(self,search):
+        self.render_figure.set_param("images",self.dbImage.getallbymf(search["mf"][0]))
+        return self.render_some_json("ajouter/photos.json")
     def nouveau(self,search):
         return self.render_figure.render_figure("welcome/new.html")
     def getlyrics(self,params={}):
@@ -284,7 +281,10 @@ class Route():
             print("link route ",path)
             ROUTES={
             '^/nouvelleimage$': self.nouvelleimage,
+            '^/nouvelleimagetext$': self.nouvelleimagetext,
             '^/ajouterimage$': self.ajouterimage,
+            '^/ajouterimagetext$': self.ajouterimagetext,
+            '^/photos$': self.photos,
             '^/new$': self.nouveau,
             '^/welcome$': self.welcome,
             '^/signin$': self.signin,

@@ -1,2 +1,3 @@
-uploads/*
-__pycache__/*
+./uploads/*
+./picexample/*
+./__pycache__/*
