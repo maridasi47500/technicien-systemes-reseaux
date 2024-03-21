@@ -6,12 +6,14 @@ from executeprogram import Executeprogram
 import sys
 import datetime
 from datetime import date
+from message import Message
 class RenderFigure():
     def __init__(self,program):
         self.session={"name":"","notice":"","mysession":False}
         self.mytemplate="./mypage/index.html"
         self.path=program.get_path()
         self.title=program.get_title()
+        self.dbmessage=Message()
         self.headingone=program.get_title()
         self.redirect=""
         self.body=""
@@ -36,7 +38,7 @@ class RenderFigure():
     def render_body(self):
         try:
           mystr=""
-          loc={"session": self.session,"render_collection": self.render_collection,"params":self.params,"getparams": self.getparams,"Fichier":Fichier,"date":date,"datetime":datetime}
+          loc={"session": self.session,"render_collection": self.render_collection,"params":self.params,"getparams": self.getparams,"Fichier":Fichier,"date":date,"datetime":datetime,"nbmessage":self.dbmessage.nbmessageuserid}
           for n in self.params:
               loc[n]=self.params[n]
           for j in self.body.split("<%"):

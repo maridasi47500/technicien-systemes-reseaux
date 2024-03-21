@@ -103,13 +103,14 @@
                             <%="<form action=\"/logmeout\" method=\"post\"><input value=\"se deconnecter\" type=\"submit\"/></form>" if session['name'] != "" else ""%>
 
                                     <%="bienvenue "+session['name'] if session['name'] != "" else ""%>
+				    <%="<span class=\"mymessages\">&#9993;<span id=\"lblCartCount\">"+nbmessage(session['user_id'])+"</span></span>" if session['name'] != "" else ""%>
                                     <span class="mymessages">&#9993;<span id="lblCartCount"><%=session['nbmessage']%></span></span>
 
             </div>
 
 					        <ul class="navbar-nav mr-auto">
 							      <li class="nav-item active">
-								              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+								              <a class="nav-link" href="/signin">Sign in <span class="sr-only">(current)</span></a>
 									            </li>
 										          <li class="nav-item">
 												          <a class="nav-link" href="#">Link</a>
