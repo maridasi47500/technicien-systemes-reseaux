@@ -5,6 +5,7 @@ from user import User
 from myrecording import Myrecording
 from place import Place
 from image import Image
+from message import Message
 from imagetext import Imagetext
 from stuff import Stuff
 
@@ -27,6 +28,7 @@ class Route():
         self.dbLieu=Place()
         self.dbStuff=Stuff()
         self.dbImage=Image()
+        self.dbMessage=Message()
         self.dbImagetext=Imagetext()
         self.render_figure=RenderFigure(self.Program)
         self.getparams=("id",)
@@ -180,21 +182,30 @@ class Route():
         self.set_session(self.user)
         self.set_redirect(("/seeuser/"+params["id"][0]))
     def login(self,s):
-        search=self.get_post_data()(params=("email","password","password_security"))
-        self.user=self.dbUsers.getbyemailpwsecurity(search["email"],search["password"],search["password_security"])
+        search=self.get_post_data()(params=("email","password"))
+        self.user=self.dbUsers.getbyemailpwsecurity(search["email"],search["password"])
         print("user trouve", self.user)
         if self.user["email"] != "":
             print("redirect carte didentite")
             self.set_session(self.user)
             self.set_json("{\"redirect\":\"/cartedidentite\"}")
         else:
-            self.set_json("{\"redirect\":\"/youbank\"}")
+            self.set_json("{\"redirect\":\"/messages\"}")
             print("session login",self.Program.get_session())
         return self.render_figure.render_json()
     def ajouterimage(self,search):
         return self.render_figure.render_figure("ajouter/image.html")
+    def cartedidentite(self,search):
+        return self.render_figure.render_figure("welcome/carte.html")
     def ajouterimagetext(self,search):
         return self.render_figure.render_figure("ajouter/imagetext.html")
+    def lucemessage(self,search):
+        myparam=self.get_post_data()(params=("messageid",))
+        x=self.dbMessage.destroy(myparam["messageid"])
+        return self.render_some_json("welcome/mymessage.json")
+    def message(self,search):
+        self.render_figure.set_param("messages",self.dbImagetext.getallbyuserid(self.Program.get_session()["user_id"]))
+        return self.render_figure.render_figure("welcome/messages.html")
     def photos(self,search):
         self.render_figure.set_param("images",self.dbImage.getallbymf(search["mf"][0]))
         return self.render_some_json("ajouter/photos.json")
@@ -226,10 +237,10 @@ class Route():
         self.user=self.dbUsers.create(myparam)
         if self.user["user_id"]:
             self.set_session(self.user)
-            self.set_json("{\"redirect\":\"/youbank\"}")
+            self.set_json("{\"redirect\":\"/messages\"}")
             return self.render_figure.render_json()
         else:
-            self.set_json("{\"redirect\":\"/youbank_inscription\"}")
+            self.set_json("{\"redirect\":\"/signin\"}")
             return self.render_figure.render_json()
     def joueraujeu(self,params={}):
         self.set_json("{\"redirect\":\"/signin\"}")
@@ -282,7 +293,10 @@ class Route():
             ROUTES={
             '^/nouvelleimage$': self.nouvelleimage,
             '^/nouvelleimagetext$': self.nouvelleimagetext,
+            '^/cartedidentite$': self.cartedidentite,
             '^/ajouterimage$': self.ajouterimage,
+            '^/messages$': self.message,
+            '^/lucemessage$': self.lucemessage,
             '^/ajouterimagetext$': self.ajouterimagetext,
             '^/photos$': self.photos,
             '^/new$': self.nouveau,

@@ -18,15 +18,20 @@ class Message(Model):
         self.con.commit()
         #self.con.close()
     def createmessageuserid(self,userid):
-        for x in self.imagedb.getall():
-          self.cur.execute("insert into message (user_id,imagetext_id) values (:user_id,:imagetext_id)",{"user_id":userid,"imagetext_id": x["id"]})
-          self.con.commit()
-
+        try:
+          for x in self.imagedb.getall():
+              self.create({"user_id":str(userid),"imagetext_id": str(x["id"])})
+          row=self.cur.fetchall()
+          print(row)
+          return row
+        except Exception as e:
+          print(e)
+          return ""
     def nbmessageuserid(self,userid):
         self.cur.execute("select count(id) as heythere from message where user_id = ?",(userid,))
 
         row=self.cur.fetchone()
-        return row["heythere"]
+        return str(row["heythere"])
     def getall(self):
         self.cur.execute("select * from message")
 
@@ -38,6 +43,10 @@ class Message(Model):
         job=self.cur.fetchall()
         self.con.commit()
         return None
+    def destroy(self,myid):
+        self.cur.execute("delete from message where id = ?",(myid,))
+        self.con.commit()
+        return "wow" 
     def getbyid(self,myid):
         self.cur.execute("select * from message where id = ?",(myid,))
         row=dict(self.cur.fetchone())

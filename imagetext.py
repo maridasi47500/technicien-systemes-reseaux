@@ -15,6 +15,11 @@ class Imagetext(Model):
                     );""")
         self.con.commit()
         #self.con.close()
+    def getallbyuserid(self,userid):
+        self.cur.execute(" select message.id, imagetext.text, image.pic as pic, message.user_id from imagetext left join message on message.imagetext_id = imagetext.id left join image on image.id = imagetext.image_id where message.user_id = ?",(userid,))
+
+        row=self.cur.fetchall()
+        return row
     def getall(self):
         self.cur.execute("select * from imagetext")
 

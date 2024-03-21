@@ -34,3 +34,6 @@
 .mymessages{
 font-size:40px;
 }
+img {
+	max-width:200px;
+}

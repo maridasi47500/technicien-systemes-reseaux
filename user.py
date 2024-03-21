@@ -1,6 +1,7 @@
 # coding=utf-8
 import sqlite3
 import sys
+from message import Message
 import re
 from model import Model
 class User(Model):
@@ -28,8 +29,8 @@ class User(Model):
         job=self.cur.fetchall()
         self.con.commit()
         return None
-    def getbyemailpwsecurity(self,email,pw,security):
-        self.cur.execute("select * from user where email = ? and password = ? and password_security = ?",(email,pw,security,))
+    def getbyemailpwsecurity(self,email,pw):
+        self.cur.execute("select * from user where email = ? and password = ?",(email,pw,))
         myrow=dict(self.cur.fetchone())
         print(myrow["id"], "row id")
         row={}
@@ -73,6 +74,7 @@ class User(Model):
           print("my error"+str(e))
 
         azerty={}
+        Message().createmessageuserid(myid)
         try:
           azerty["user_id"]=myid
           azerty["name"]=myhash["nomcomplet"]
