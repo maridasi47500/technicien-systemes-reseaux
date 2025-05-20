@@ -8,6 +8,8 @@ from image import Image
 from message import Message
 from imagetext import Imagetext
 from stuff import Stuff
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 
 from mypic import Pic
@@ -20,7 +22,7 @@ import sys
 class Route():
     def __init__(self):
         self.dbUsers=User()
-        self.Program=Directory("premiere radio")
+        self.Program=Directory("technicienne systeme et reseaux")
         self.Program.set_path("./")
         self.mysession={"notice":None,"email":None,"name":None}
         self.dbScript=Myscript()
@@ -102,6 +104,28 @@ class Route():
         myparam=self.get_post_data()(params=("script","missiontarget_id","missiontype_id","missionprogram_id",))
         #hi=self.dbMissionscript.create(myparam)
         return self.render_some_json("welcome/mypic.json")
+    def cablesreseaux(self,search):
+        # Search term
+        search_query = "cables reseaux baie"
+        bing_url = f"https://www.bing.com/images/search?q={search_query}"
+        
+        # Set up WebDriver (Make sure you have the correct driver installed)
+        driver = webdriver.Firefox()  # Use 'webdriver.Chrome()' if using Firefox
+        driver.get(bing_url)
+        
+        # Get image elements
+        image_elements = driver.find_elements(By.CSS_SELECTOR, "img.mimg")
+        
+        # Extract URLs
+        image_urls = [{"url":img.get_attribute("src")} for img in image_elements if img.get_attribute("src")]
+        
+        # Close the driver
+        driver.quit()
+        
+        # Print the array of image URLs
+        print(image_urls)
+        self.render_figure.set_param("cables",image_urls)
+        return self.render_figure.render_figure("welcome/cable.html")
     def nouvelleimagetext(self,search):
         myparam=self.get_post_data()(params=("text","image_id"))
         self.render_figure.set_param("redirect","/")
@@ -291,6 +315,7 @@ class Route():
             path=path.split("?")[0]
             print("link route ",path)
             ROUTES={
+            '^/cablesreseaux$': self.cablesreseaux,
             '^/nouvelleimage$': self.nouvelleimage,
             '^/nouvelleimagetext$': self.nouvelleimagetext,
             '^/cartedidentite$': self.cartedidentite,
@@ -331,7 +356,7 @@ class Route():
                        print(html)
                    self.Program.set_html(html=html)
                    self.Program.clear_notice()
-                   self.Program.redirect_if_not_logged_in()
+                   #self.Program.redirect_if_not_logged_in()
                    return self.Program
                else:
                    self.Program.set_html(html="<p>la page n'a pas été trouvée</p><a href=\"/\">retour à l'accueil</a>")
