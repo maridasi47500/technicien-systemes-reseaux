@@ -1,0 +1,19 @@
+<h1>toutesles baies reseaux</h1>
+
+<div class="container mt-5">
+    <div class="card text-center shadow-lg" style="width: 18rem;">
+        <div class="position-absolute start-50 translate-middle rounded-circle p-3 text-light bg-dark">
+            <i class="bi bi-code-slash"></i> <!-- Bootstrap Icon -->
+        </div>
+        <div class="card-body mt-5">
+            <h5 class="card-title">Card Title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+<%=render_collection(collection=params['cables'], partial='welcome/_cable.html', as_='cable')%>
+</div>
+
+
+
+

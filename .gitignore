@@ -1,3 +1,4 @@
 ./uploads/*
 ./picexample/*
+myFileDb.db
 ./__pycache__/*
